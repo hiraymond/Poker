@@ -1,6 +1,6 @@
 # Poker
 Name: Lau Wai Hang  UID: 3035693155
-Name:   UID:
+Name: Leung Yui Hung  UID: 3035689752
 
 A game description with basic game rules:
 We proposed to make a one-player poker game, which the player would play with one computer player.
@@ -23,5 +23,5 @@ Code Requirement. Your implementation should encompass the following coding elem
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
 2. We would be using int arrays to store cards for player, computer player, and public deck.
 3.
-4.
-5.
+4. use .txt file to save current hand of player, coputer player and deck.
+5. We will have a file for the computer player, a file for loading/saving game status, a file for user input and a file for the main        body.
