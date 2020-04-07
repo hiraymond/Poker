@@ -24,5 +24,5 @@ Your implementation should encompass the following coding elements:
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
 2. We would be using int arrays to store cards for player, computer player, and public deck.
 3.
-4. use .txt file to save current hand of player, coputer player and deck.
+4. use .txt file to save current hand of player, computer player and deck.
 5. We will have a file for the computer player, a file for loading/saving game status, a file for user input and a file for the main        body.
