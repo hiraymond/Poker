@@ -10,7 +10,7 @@ And player can add bet or withdraw from that round according to general poker ru
 Our program would determine who is winner after the final bet has been added in each round.
 Player can choose to end game when he/she withdraw or finish each round.
 
-Code Requirement. Your implementation should encompass the following coding elements:
+Code Requirement:
 
 1. Generation of random game sets or events
 2. Data structures for storing game status
@@ -18,6 +18,7 @@ Code Requirement. Your implementation should encompass the following coding elem
 4. File input/output (e.g., for loading/saving game status)
 5. Program codes in multiple files
 
+Your implementation should encompass the following coding elements:
 
 1. There would be total of nine different ramdom cards generated in each round. 
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
