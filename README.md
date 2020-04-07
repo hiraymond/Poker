@@ -18,6 +18,7 @@ Code Requirement. Your implementation should encompass the following coding elem
 4. File input/output (e.g., for loading/saving game status)
 5. Program codes in multiple files
 
+
 1. There would be total of nine different ramdom cards generated in each round. 
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
 2. We would be using int arrays to store cards for player, computer player, and public deck.
