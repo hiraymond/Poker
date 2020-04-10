@@ -23,6 +23,6 @@ Your implementation should encompass the following coding elements:
 1. There would be total of nine different ramdom cards generated in each round. 
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
 2. We would be using arrays and struct to store cards for player, computer player, and public deck.
-3. We would use dynamic arrays to store datas and clear it after saving the game using .txt file. 
+3. We would use dynamic arrays to store hands and clear it after each round. 
 4. use .txt file to save current hand of player, computer player and deck.
 5. We will have a file for the computer player, a file for loading/saving game status, a file for user input and a file for the main        body.
