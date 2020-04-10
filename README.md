@@ -24,5 +24,8 @@ Your implementation should encompass the following coding elements:
    (two for player hand cards, two for computer player hand cards, and five for the public deck)
 2. We would be using arrays and struct to store cards for player, computer player, and public deck.
 3. We would use dynamic arrays to store hands and clear it after each round. 
-4. use .txt file to save current hand of player, computer player and deck.
+   We would also use dynamic arrays to store the win/lose record for the player, 
+   the limits is set as two records in the beginning, and the size of the record array
+   would double when the limits is met.
+4. use .txt file to save current hand of player, computer player, deck and the win/lose record.
 5. We will have a file for the computer player, a file for loading/saving game status, a file for user input and a file for the main        body.
