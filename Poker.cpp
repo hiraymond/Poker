@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 #define SPADE "\xE2\x99\xA0"
 #define CLUB "\xE2\x99\xA3"
 #define HEART "\xE2\x99\xA5"
@@ -45,24 +46,194 @@ void distribute_card(int cardset[], int playerhand[], int comphand[], int public
 	}
 }
 
-void newroundofgame(double money, double buyin, double ante){
-	int cardset[52], playerhand[2], comphand[2], publicdeck[5];
-	double pool;
+ string inttostr(int card){
+  string s1;
+  switch (card%13) {
+    case(0) : s1="A";
+    break;
+    case(1):  case(2):
+    case(3):  case(4):
+    case(5):  case(6):
+    case(7):  case(8):
+    case(9):
+    s1=to_string(card%13+1);
+    break;
+    case(10): s1="J";
+    break;
+    case(11): s1='Q';
+    break;
+    case(12): s1='K';
+    break;
+  }
+  if (0<=card && card<=12)
+      s1+=SPADE;
+  else if (13<=card && card<=25)
+      s1+=HEART;
+  else if (26<=card && card<=38)
+      s1+=CLUB;
+  else if (39<=card && card<=51)
+      s1+=DIAMOND;
+  return s1;
+}
+
+int p_addbetturn(double &pool, double &money){
+	int choice;
+	double bet;
+	cout<<"It is your turn to add bet\nPlease enter a integer to proceed\n";
+	cout<<"0: Withdraw from this round\n1: Check\n2: Add bet\n";
+	cin>>choice;
+	while (choice<0 || choice>2){
+		cout<<"Invalid choice, please enter again\n";
+		cin>>choice;
+	}
+	if (choice==0){
+		cout<<"**You have withdrawed from this round**\n";
+		return -1;
+	}
+	else if (choice==1){
+		cout<<"You have checked for this turn\n";
+		return 0;
+	}
+	else if (choice==2){
+		cout<<"Please enter the amount of bet that you want to add: \n";
+		cin>>bet;
+		while (bet<=0){
+			cout<<"Invalid bet, please enter again\n";
+			cin>>bet;
+		}
+		pool+=bet;
+		money-=bet;
+		cout<<"The pool now contains $"<<pool<<endl;
+		cout<<"You remains $"<<money<<endl;
+		return bet;
+	}
+	return 0;
+}
+
+int c_addbetturn(double &pool, double &money, double bet, double buyin){
+	if (bet==0){
+		// The player just checked
+		// 1/4 chance the computer would add bet
+		srand(time(NULL));
+		int addornot=rand()%4;
+		if (addornot==0){	//computer add bet
+			pool+=money*0.02;
+			cout<<"The computer player has added "<<money*0.02<<"to the pool\n";
+			cout<<"The pool now contains $"<<pool<<endl;
+			cout<<"Are you going to follow the bet?\n";
+			cout<<"Enter either 0: Withdraw from this round OR \'any other integer\': Follow the bet\n";
+			return 1;
+		}
+		else{	// computer check
+			cout<<"The computer player also checked\n";
+			cout<<"The pool now contains $"<<pool<<endl;
+			return 2;
+		}
+	}
+	else if (bet>buyin*0.08 && bet<buyin*0.15){
+		// player added large amount of bet
+		srand(time(NULL));
+		int checkornot=rand()%3;
+		if (checkornot==0){	//computer withdraw from this round
+			cout<<"**The computer player has withdrawed from this round**\n";
+			cout<<"The pool now contains $"<<pool<<endl;
+			money+=pool;
+			pool=0;
+			cout<<"After adding the profit of this round, you have $"<<money<<endl;
+			return -1;
+		}
+		else {	// computer check
+			cout<<"The computer player followed your bet\n";
+			pool+=bet;
+			cout<<"The pool now contains $"<<pool<<endl;
+			return 2;
+		}
+	}
+	else if (bet>=buyin*0.15){
+		// player added very large amount of bet
+		srand(time(NULL));
+		int checkornot=rand()%3;
+		if (checkornot==0){	// computer check
+			cout<<"The computer player followed your bet\n";
+			pool+=bet;
+			cout<<"The pool now contains $"<<pool<<endl;
+			return 2;
+			
+		}
+		else {	// computer withdraw from this round
+			cout<<"**The computer player has withdrawed from this round**\n";
+			cout<<"The pool now contains $"<<pool<<endl;
+			money+=pool;
+			pool=0;
+			cout<<"After adding the profit of this round, you have $"<<money<<endl;
+			return -1;
+		}
+	}
+	else {
+		// player added a small bet and computer follow the bet
+		cout<<"The computer player followed your bet\n";
+		pool+=bet;
+		cout<<"The pool now contains $"<<pool<<endl;
+		return 2;
+	}
+	return 2;
+}
+	
+
+int newroundofgame(double money, double buyin, double ante){
+	int cardset[52], playerhand[2], comphand[2], publicdeck[5], p_choice, c_choice;
+	double pool=0;
+	// string format of the card, for printing the iamge of card
+	string p0, p1, c0, c1, public0, public1, public2, public3, public4;
 	for (int i=0; i<52; ++i){
 		cardset[i]=i;
 	}
 	for (int i=51; i>0; --i){
-    //get swap index
-    int j = rand()%i;
-    //swap cardset[i] with cardset[j]
-    int temp = cardset[i];
-    cardset[i] = cardset[j];
-    cardset[j] = temp;
-  }
+		//get swap index
+	 	int j = rand()%i;
+ 		//swap cardset[i] with cardset[j]
+    		int temp = cardset[i];
+  		cardset[i] = cardset[j];
+	    	cardset[j] = temp;
+	}
 	distribute_card(cardset, playerhand, comphand, publicdeck);
-	cout<<"Your current money is: "<<money<<endl;
-	cout<<"After adding the antes from you and the computer, the pool contains $"<<2*ante<<endl;
-	cout<<"Your current hand is "<<playerhand[0]<<' '<<playerhand[1]<<endl;
+	cout<<"Your current money is: $"<<money<<endl;
+	pool+=2*ante;
+	money-=ante;
+	cout<<"After adding the antes from you and the computer, the pool contains $"<<pool<<endl;
+	p0=inttostr(playerhand[0]);
+	p1=inttostr(playerhand[1]);
+	cout<<"Your current hand is "<<p0<<' '<<p1<<endl;
+	// FIRST ADDBET TURN
+	p_choice=p_addbetturn(pool, money);
+	if (p_choice==-1){
+		// player have withdrawed from this round
+		//endgame();
+		return 0;
+	}
+	c_choice=c_addbetturn(pool, money, p_choice, buyin);
+	if (c_choice==-1){
+		// computer have withdrawed from this round
+		//endgame();
+		return 0;
+	}
+	else if (c_choice==1){	// computer raised the bet
+		cin>>p_choice;
+		if (p_choice==0){
+			// player don't follow computer's bet and withdraw
+			//endgame();
+			return 0;
+		}
+		else{
+			cout<<"You followed the bet\n";
+			pool+=money*0.02;
+			money-=money*0.02;
+			cout<<"The pool now contains $"<<pool<<endl;
+			cout<<"You remains $"<<money<<endl;
+		}
+	}
+	// SECOND ADDBET TURN
+	return 0;
 }
 
 int main(){
