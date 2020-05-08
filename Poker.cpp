@@ -8,6 +8,8 @@
 #include <ctime>
 #include <string>
 #include <bits/stdc++.h>
+#include "RecordOutput.h"
+#include "RecordInput.h"
 #define SPADE "\xE2\x99\xA0"
 #define CLUB "\xE2\x99\xA3"
 #define HEART "\xE2\x99\xA5"
@@ -45,34 +47,6 @@ void printrules(){
     "And consider only 5 cards of the combined hand cards,\n"<<
     "The player have the higher ranking of card combination would win\n"<<
     "Details of the definition of \'higher ranking\' can be found in the Wikipedia of \'list of poker hand\'\n\n";
-}
-
-void RecordOutput(double money){
-	ofstream fout;
-	fout.open("record.txt");
-
-	if (fout.fail()){
-    cout << "Error" << endl;
-    exit(1);
-  }
-
-	fout << money << endl;
-	fout.close();
-}
-
-void RecordInput(double &money){
-	ifstream fin;
-	fin.open("record.txt");
-
-	if (fin.fail()){
-    cout << "Error" << endl;
-    exit(1);
-  }
-
-	string tempS;
-	getline(fin, tempS);
-	money = stod(tempS);
-	fin.close();
 }
 
 void distribute_card(int cardset[], handcard player[], handcard computer[], handcard publicdeck[]){
