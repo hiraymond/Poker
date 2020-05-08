@@ -664,7 +664,7 @@ int c_addbetturn(double &pool, double &money, double bet, double buyin){
 int newroundofgame(double &money, double buyin, double ante){
 	int cardset[52], p_choice, c_choice, sizePu = 0;
 	double pool=0;
-	handcard player[2], computer[2], publicdeck[5];
+	handcard player[2], computer[2], publicdeck[5], playerSTR[2], computerSTR[2], publicdeckSTR[5];
 	bool ComWin = false;
 	bool PlaWin = false;
 	// array for handcard to store the cards for this round
@@ -686,9 +686,9 @@ int newroundofgame(double &money, double buyin, double ante){
 	money-=ante;
 	cout<<"After adding the antes from you and the computer, the pool contains $"<<pool<<endl;
 	cout<<"You remains $"<<money<<endl;
-	player[0].cardimage=inttostr(player[0].cardno);
-	player[1].cardimage=inttostr(player[1].cardno);
-	cout<<"Your current hand is "<<player[0].cardimage<<' '<<player[1].cardimage<<endl;
+	playerSTR[0].cardimage=inttostr(player[0].cardno);
+	playerSTR[1].cardimage=inttostr(player[1].cardno);
+	cout<<"Your current hand is "<<playerSTR[0].cardimage<<' '<<playerSTR[1].cardimage<<endl;
 
 	// FIRST ADD BET TURN
 	srand(time(NULL));
@@ -729,7 +729,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	srand(time(NULL));
 	for (int i=0; i<5; ++i){
 		// store cardimage in publicdeck array
-		publicdeck[i].cardimage=inttostr(publicdeck[i].cardno);
+		publicdeckSTR[i].cardimage=inttostr(publicdeck[i].cardno);
 	}
 	cout<<"The first three cards of the publicdeck is as follow: \n";
 	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<endl;
@@ -832,8 +832,8 @@ int newroundofgame(double &money, double buyin, double ante){
 	}
 	// Should judge win/lose here **********
 	cout<<"The computer hand cards are:\n";
-	computer[0].cardimage=inttostr(computer[0].cardno);
-	computer[1].cardimage=inttostr(computer[1].cardno);
+	computerSTR[0].cardimage=inttostr(computer[0].cardno);
+	computerSTR[1].cardimage=inttostr(computer[1].cardno);
 	cout<<computer[0].cardimage<<' '<<computer[1].cardimage<<endl;
 	// Result of the round
 	endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin);
