@@ -886,7 +886,7 @@ int main(){
 	// ante is a fixed bet to add into pool in each round before game start
 	int nextround, mode;
 	printrules();
-	cout << "Enter 1: Load previous record\n2: Start a new game!\n";
+	cout << "Enter 1: Load previous record (Please ensure the standard format record file (record.txt) is in the same folder)\n2: Start a new game!\n";
 	cin >> mode;
 	if (mode == 1){
 		RecordInput(money);
