@@ -90,11 +90,9 @@ bool compare(int a, int b) {        //reverse sort
   return a > b;
 }
 
-void endgame(int playerhand[],int comphand[],int publicdeck[])
+void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu)
 {
-	int sizePu;
-	sizePu = sizeof(publicdeck)/sizeof(publicdeck[0]);
-	int checkP[2 + sizePu], checkC[2 + sizePu], checkCO[2 + sizePu], checkPO[2 + sizePu];
+	int *checkP = new int[2 + sizePu], *checkC = new int[2 + sizePu], *checkCO = new int[2 + sizePu], *checkPO = new int[2 + sizePu];
 
 
 	for (int i = 0; i < 2 + sizePu; i++){            //combine hand and publicdeck
@@ -114,10 +112,10 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 
 	for (int i = 0; i < 2 + sizePu; i++){
 		while (checkP[i] > 12){
-			checkp[i] -= 13;
+			checkP[i] -= 13;
 		}
 		while (checkC[i] > 12){
-			checkC[i] -= 13
+			checkC[i] -= 13;
 		}
 	}
 	sort(checkP, checkP + 2 + sizePu, compare);             //sorted using STL function
@@ -179,7 +177,7 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 			}
 			if (countSP == 5){
 				straightP = true;
-				StraightLarP = checkP[i]
+				StraightLarP = checkP[i];
 				break;
 			}
 		}
@@ -193,7 +191,7 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 			}
 			if (countSC == 5){
 				straightC = true;
-				StraightLarC = checkC[i]
+				StraightLarC = checkC[i];
 				break;
 			}
 		}
@@ -321,7 +319,7 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 		if (iter->second == 2){
 			pP[countpairP] = iter->first;
 			onePairP = true;
-			countpairP++
+			countpairP++;
 		}
 		if (countpairP == 2){
 			twoPairP = true;
@@ -335,7 +333,7 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 			countpairC++;
 		}
 		if (countpairC == 2){
-			twoPairC = true
+			twoPairC = true;
 			break;
 		}
 	}
@@ -361,17 +359,17 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 					countSFP++;
 				}
 				if (checkCO[i] == checkCO[j] + countSFC){
-					countSFC++
+					countSFC++;
 				}
 			}
-		}
-		if (countSFP == 5){
-			straightFlushP = true;
-			break;
-		}
-		if (countSFC == 5){
-			straightFlushC = true;
-			break;
+			if (countSFP == 5){
+				straightFlushP = true;
+				break;
+			}
+			if (countSFC == 5){
+				straightFlushC = true;
+				break;
+			}
 		}
 	}
 
@@ -388,13 +386,13 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 	for (iter = CountRepeatC.begin(); iter != CountRepeatC.end(); iter++){
 		if (iter->second == 1){
 			highestC = iter->second;
-			break
+			break;
 		}
 	}
 	for (iter = CountRepeatP.begin(); iter != CountRepeatP.end(); iter++){
 		if (iter->second == 1){
 			highestP = iter->second;
-			break
+			break;
 		}
 	}
 
@@ -485,7 +483,7 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 							ComWin = true;
 						}
 						if (StraightLarP > StraightLarC){
-							playwin = true;
+							PlaWin = true;
 						}
 					}
 					if (not straightC && not straightP){
@@ -559,10 +557,10 @@ void endgame(int playerhand[],int comphand[],int publicdeck[])
 
 	//win print
 	if (ComWin){
-		cout << "Your opponent wins the round"
+		cout << "Your opponent wins the round" << endl;
 	}
 	if (PlaWin){
-		cout << "Congratulate! You win the round"
+		cout << "Congratulate! You win the round" << endl;
 	}
 }
 
@@ -667,7 +665,7 @@ int c_addbetturn(double &pool, double &money, double bet, double buyin){
 }
 
 int newroundofgame(double &money, double buyin, double ante){
-	int cardset[52], p_choice, c_choice;
+	int cardset[52], p_choice, c_choice, sizePu = 0;
 	double pool=0;
 	handcard player[2], computer[2], publicdeck[5];
 	// array for handcard to store the cards for this round
@@ -701,13 +699,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	// p_choice>0: amount of bet
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		//endgame(); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu); ***************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		//endgame(); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu); ***************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -715,7 +713,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			//endgame(); ****************
+			endgame(playerhand, comphand, publicdeck, sizePu); ****************
 			return 0;
 		}
 		else{
@@ -728,6 +726,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	}
 
 	// SECOND ADD BET TURN
+	sizePu = 3;
 	srand(time(NULL));
 	for (int i=0; i<5; ++i){
 		// store cardimage in publicdeck array
@@ -738,13 +737,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		//endgame(); **************
+		endgame(playerhand, comphand, publicdeck, sizePu); **************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		//endgame(); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu); ***************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -752,7 +751,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			//endgame(); *********************
+			endgame(playerhand, comphand, publicdeck, sizePu); *********************
 			return 0;
 		}
 		else{
@@ -765,19 +764,20 @@ int newroundofgame(double &money, double buyin, double ante){
 	}
 
 	// THIRD ADD BET TURN
+	sizePu = 4;
 	srand(time(NULL));
 	cout<<"The first four cards of the publicdeck is as follow: \n";
 	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<' '<<publicdeck[3].cardimage<<endl;
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		//endgame(); *************
+		endgame(playerhand, comphand, publicdeck, sizePu); *************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		//endgame(); **************
+		endgame(playerhand, comphand, publicdeck, sizePu); **************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -785,7 +785,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			//endgame(); **************
+			endgame(playerhand, comphand, publicdeck, sizePu); **************
 			return 0;
 		}
 		else{
@@ -798,6 +798,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	}
 
 	// LAST ADD BET TURN
+	sizePu = 5;
 	srand(time(NULL));
 	cout<<"The all five cards of the publicdeck is as follow: \n";
 	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<' '
@@ -805,13 +806,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		//endgame(); *******************
+		endgame(playerhand, comphand, publicdeck, sizePu); *******************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		//endgame(); **************
+		endgame(playerhand, comphand, publicdeck, sizePu); **************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -819,7 +820,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			//endgame(); ******************
+			endgame(playerhand, comphand, publicdeck, sizePu); ******************
 			return 0;
 		}
 		else{
@@ -836,6 +837,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	computer[1].cardimage=inttostr(computer[1].cardno);
 	cout<<computer[0].cardimage<<' '<<computer[1].cardimage<<endl;
 	// Result of the round
+	endgame(playerhand, comphand, publicdeck, sizePu);
 	return 0;
 }
 
