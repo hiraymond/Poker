@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#define SPADE "\x
+#include <bits/stdc++.h>
 #define SPADE "\xE2\x99\xA0"
 #define CLUB "\xE2\x99\xA3"
 #define HEART "\xE2\x99\xA5"
@@ -82,6 +84,486 @@ string inttostr(int card){
   else if (39<=card && card<=51)
       s1+=DIAMOND;
   return s1;
+}
+
+bool compare(int a, int b) {        //reverse sort
+  return a > b;
+}
+
+void endgame(int playerhand[],int comphand[],int publicdeck[])
+{
+	int sizePu;
+	sizePu = sizeof(publicdeck)/sizeof(publicdeck[0]);
+	int checkP[2 + sizePu], checkC[2 + sizePu], checkCO[2 + sizePu], checkPO[2 + sizePu];
+
+
+	for (int i = 0; i < 2 + sizePu; i++){            //combine hand and publicdeck
+		if (i < 2){
+			checkP[i] = playerhand[i];
+			checkC[i] = comphand[i];
+			checkPO[i] = playerhand[i];
+			checkCO[i] = comphand[i];
+		}
+		else{
+			checkP[i] = publicdeck[i - 2];
+			checkC[i] = publicdeck[i - 2];
+			checkPO[i] = publicdeck[i - 2];
+			checkCO[i] = publicdeck[i - 2];
+		}
+	}
+
+	for (int i = 0; i < 2 + sizePu; i++){
+		while (checkP[i] > 12){
+			checkp[i] -= 13;
+		}
+		while (checkC[i] > 12){
+			checkC[i] -= 13
+		}
+	}
+	sort(checkP, checkP + 2 + sizePu, compare);             //sorted using STL function
+	sort(checkC, checkC + 2 + sizePu, compare);
+	sort(checkPO, checkPO + 2 + sizePu, compare);
+	sort(checkCO, checkCO + 2 + sizePu, compare);
+
+
+	map<int, int> CountRepeatP;                // similar to dictionary in python
+	map<int, int> CountRepeatC;
+
+
+	for (int i = 0; i < 2 + sizePu; i++){                 //count reapeat element and store in map
+		map<int, int>::iterator targetP;
+		map<int, int>::iterator targetC;
+		targetP =  CountRepeatP.find(checkP[i]);
+		targetC =  CountRepeatC.find(checkC[i]);
+		if (targetP == CountRepeatP.end()){
+			CountRepeatP[checkP[i]] = 1;
+		}
+		else{
+			CountRepeatP[checkP[i]]++;
+		}
+		if (targetC == CountRepeatC.end()){
+			CountRepeatC[checkC[i]] = 1;
+		}
+		else{
+			CountRepeatC[checkC[i]]++;
+		}
+	}
+
+	bool straightFlushP = false;
+  bool fourOfAKindP = false;
+  bool fullHouseP = false;
+  bool flushP = false;
+  bool straightP = false;
+  bool threeOfAKindP = false;
+  bool twoPairP = false;
+  bool onePairP = false;
+
+	bool straightFlushC = false;
+  bool fourOfAKindC = false;
+  bool fullHouseC = false;
+	bool straightC = false;
+  bool flushC = false;
+  bool threeOfAKindC = false;
+  bool twoPairC = false;
+  bool onePairC = false;
+
+  //check straight
+	int countSP = 1, countSC = 1;
+	int StraightLarP, StraightLarC;
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (2 + sizePu - i >= 5){
+			for (int j = i + 1; j < i + 4; j++){
+				if (checkP[i] == checkP[j] + countSP){
+					countSP++;
+				}
+			}
+			if (countSP == 5){
+				straightP = true;
+				StraightLarP = checkP[i]
+				break;
+			}
+		}
+	}
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (2 + sizePu - i >= 5){
+			for (int j = i + 1; j < i + 4; j++){
+				if (checkC[i] == checkC[j] + countSC){
+					countSC++;
+				}
+			}
+			if (countSC == 5){
+				straightC = true;
+				StraightLarC = checkC[i]
+				break;
+			}
+		}
+	}
+
+	//check flush include suit
+	int FP, FC;                //suit
+	int cS = 0;
+	int cC = 0;
+	int cH = 0;
+	int cD = 0;
+	for (int i = 0; i < 2 + sizePu; i++){
+		cS = 0;
+		cC = 0;
+		cH = 0;
+		cD = 0;
+		for (int j = i + 1; j < 2 + sizePu; j++){
+			if (checkPO[i] <= 12){
+				cS++;
+			}
+			if (checkPO[i] >= 13 && checkPO[i] <= 25){
+				cC++;
+			}
+			if (checkPO[i] >= 26 && checkPO[i] <= 38){
+				cH++;
+			}
+			if (checkPO[i] >= 39){
+				cD++;
+			}
+			if (cS >= 5 || cC >= 5 || cH >= 5 || cD >= 5){
+				flushP = true;
+				if (cS >= 5){
+					FP = 3;
+				}
+				if (cC >= 5){
+					FP = 2;
+				}
+				if (cH >= 5){
+					FP = 1;
+				}
+				if (cD >= 5){
+					FP = 0;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (2 + sizePu - i >= 5){
+			cS = 0;
+			cC = 0;
+			cH = 0;
+			cD = 0;
+			for (int j = i + 1; j < 2 + sizePu; j++){
+				if (checkCO[i] <= 12){
+					cS++;
+				}
+				if (checkCO[i] >= 13 && checkCO[i] <= 25){
+					cC++;
+				}
+				if (checkCO[i] >= 26 && checkCO[i] <= 38){
+					cH++;
+				}
+				if (checkCO[i] >= 39){
+					cD++;
+				}
+				if (cS >= 5 || cC >= 5 || cH >= 5 || cD >= 5){
+					flushC = true;
+					if (cS >= 5){
+						FC = 3;
+					}
+					if (cC >= 5){
+						FC = 2;
+					}
+					if (cH >= 5){
+						FC = 1;
+					}
+					if (cD >= 5){
+						FC = 0;
+					}
+				}
+			}
+		}
+	}
+
+	//check three of a kind
+	int TOKP, TOKC;
+	map<int, int>::iterator iter;
+	for (iter = CountRepeatP.begin(); iter != CountRepeatP.end(); iter++){
+		if (iter->second == 3){
+			TOKP = iter->first;
+			threeOfAKindP = true;
+			break;
+		}
+	}
+	for (iter = CountRepeatC.begin(); iter != CountRepeatC.end(); iter++){
+		if (iter->second == 3){
+			TOKC = iter->first;
+			threeOfAKindC = true;
+			break;
+		}
+	}
+
+	//check four of a kind
+	int FOKP, FOKC;
+	for (iter = CountRepeatP.begin(); iter != CountRepeatP.end(); iter++){
+		if (iter->second == 4){
+			FOKP = iter->first;
+			fourOfAKindP = true;
+			break;
+		}
+	}
+	for (iter = CountRepeatC.begin(); iter != CountRepeatC.end(); iter++){
+		if (iter->second == 4){
+			FOKC = iter->first;
+			fourOfAKindC = true;
+			break;
+		}
+	}
+
+	//check Pair
+	vector<int> pP, pC;
+	int checkPairSuitP, checkPairSuitC;
+	int countpairP = 0, countpairC = 0;
+	for (iter = CountRepeatP.begin(); iter != CountRepeatP.end(); iter++){
+		if (iter->second == 2){
+			pP[countpairP] = iter->first;
+			onePairP = true;
+			countpairP++
+		}
+		if (countpairP == 2){
+			twoPairP = true;
+			break;
+		}
+	}
+	for (iter = CountRepeatC.begin(); iter != CountRepeatC.end(); iter++){
+		if (iter->second == 2){
+			pC[countpairC] = iter->first;
+			onePairC = true;
+			countpairC++;
+		}
+		if (countpairC == 2){
+			twoPairC = true
+			break;
+		}
+	}
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (checkPO[i] % pP[0] == 0){
+			checkPairSuitP = checkPO[i];
+			break;
+		}
+	}
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (checkCO[i] % pC[0] == 0){
+			checkPairSuitC = checkCO[i];
+			break;
+		}
+	}
+
+	//Check straightFlush
+	int countSFP = 1, countSFC = 1;
+	if (flushP && straightP){
+		for (int i = 0; i < 2 + sizePu; i++){
+			for (int j = i + 1; j < i + 4; j++){
+				if (checkPO[i] == checkPO[j] + countSFP){
+					countSFP++;
+				}
+				if (checkCO[i] == checkCO[j] + countSFC){
+					countSFC++
+				}
+			}
+		}
+		if (countSFP == 5){
+			straightFlushP = true;
+			break;
+		}
+		if (countSFC == 5){
+			straightFlushC = true;
+			break;
+		}
+	}
+
+	//check fullHouse
+	if (not fourOfAKindP && threeOfAKindP && onePairP){
+		fullHouseP = true;
+	}
+	if (not fourOfAKindC && threeOfAKindC && onePairC){
+		fullHouseC = true;
+	}
+
+	//check high card
+	int highestC, highestP;
+	for (iter = CountRepeatC.begin(); iter != CountRepeatC.end(); iter++){
+		if (iter->second == 1){
+			highestC = iter->second;
+			break
+		}
+	}
+	for (iter = CountRepeatP.begin(); iter != CountRepeatP.end(); iter++){
+		if (iter->second == 1){
+			highestP = iter->second;
+			break
+		}
+	}
+
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (checkPO[i] % highestP == 0){
+			highestP = checkPO[i];
+			break;
+		}
+	}
+	for (int i = 0; i < 2 + sizePu; i++){
+		if (checkCO[i] % highestC == 0){
+			highestC = checkCO[i];
+			break;
+		}
+	}
+
+	//winner
+	bool ComWin = false;
+	bool PlaWin = false;
+	if (straightFlushP && not straightFlushC){
+		PlaWin = true;
+	}
+	if (straightFlushC && not straightFlushP){
+		ComWin = true;
+	}
+	if (straightFlushP && straightFlushC){
+		if (FP > FC){
+			PlaWin = true;
+		}
+		if (FC > FP){
+			ComWin = true;
+		}
+	}
+	if (not straightFlushP && not straightFlushC){
+		if (fourOfAKindC && not fourOfAKindP){
+			ComWin = true;
+		}
+		if (fourOfAKindP && not fourOfAKindC){
+			PlaWin = true;
+		}
+		if (fourOfAKindC && fourOfAKindP){
+			if (FOKP > FOKC){
+				PlaWin = true;
+			}
+			if (FOKC > FOKP){
+				ComWin = true;
+			}
+		}
+		if(not fourOfAKindC && not fourOfAKindP){
+			if (fullHouseP && not fullHouseC){
+				PlaWin = true;
+			}
+			if (fullHouseC && not fullHouseP){
+				ComWin = true;
+			}
+			if (fullHouseC && fullHouseP){
+				if (TOKC > TOKP){
+					ComWin = true;
+				}
+				if (TOKP > TOKC){
+					PlaWin = true;
+				}
+			}
+			if (not fullHouseP && not fullHouseC){
+				if (flushC && not flushP){
+					ComWin = true;
+				}
+				if (flushP && not flushC){
+					PlaWin = true;
+				}
+				if (flushP && flushC){
+					if (FP > FC){
+						PlaWin = true;
+					}
+					if (FC > FP){
+						ComWin = true;
+					}
+				}
+				if (not flushC && not flushP){
+					if (straightP && not straightC){
+						PlaWin = true;
+					}
+					if (straightC && not straightP){
+						ComWin = true;
+					}
+					if (straightC && straightP){
+						if (StraightLarC > StraightLarP){
+							ComWin = true;
+						}
+						if (StraightLarP > StraightLarC){
+							playwin = true;
+						}
+					}
+					if (not straightC && not straightP){
+						if (threeOfAKindC && not threeOfAKindP){
+							ComWin = true;
+						}
+						if (threeOfAKindP && not threeOfAKindC){
+							PlaWin = true;
+						}
+						if (threeOfAKindP && threeOfAKindC){
+							if (TOKC > TOKP){
+								ComWin = true;
+							}
+							if (TOKP > TOKC){
+								PlaWin = true;
+							}
+						}
+						if(not threeOfAKindC && not threeOfAKindP){
+							if (twoPairC && not twoPairP){
+								ComWin = true;
+							}
+							if (twoPairP && not twoPairC){
+								PlaWin = true;
+							}
+							if (twoPairP && twoPairC){
+								if (pP[0] > pC[0]){
+									PlaWin = true;
+								}
+								if (pC[0] > pP[0]){
+									ComWin = true;
+								}
+								if (pP[0] == pC[0]){
+									if (checkPairSuitC > checkPairSuitP){
+										ComWin = true;
+									}
+									if (checkPairSuitP > checkPairSuitC){
+										PlaWin = true;
+									}
+								}
+							}
+							if (not twoPairP && not twoPairC){
+								if (onePairP && not onePairC){
+									PlaWin = true;
+								}
+								if (onePairC && not onePairP){
+									ComWin = true;
+								}
+								if (onePairC && onePairP){
+									if (checkPairSuitC > checkPairSuitP){
+										ComWin = true;
+									}
+									if (checkPairSuitP > checkPairSuitC){
+										PlaWin = true;
+									}
+								}
+								if (not onePairP && not onePairC){
+									if (highestC > highestP){
+										ComWin = true;
+									}
+									if (highestP > highestC){
+										PlaWin = true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//win print
+	if (ComWin){
+		cout << "Your opponent wins the round"
+	}
+	if (PlaWin){
+		cout << "Congratulate! You win the round"
+	}
 }
 
 int p_addbetturn(double &pool, double &money){
