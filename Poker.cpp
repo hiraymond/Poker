@@ -42,6 +42,34 @@ void printrules(){
     "Details of the definition of \'higher ranking\' can be found in the Wikipedia of \'list of poker hand\'\n\n";
 }
 
+void RecordOutput(double money){
+	ofstream fout;
+	fout.open("record.txt");
+
+	if (fout.fail()){
+    cout << "Error" << endl;
+    exit(1);
+  }
+
+	fout << money << endl;
+	fout.close();
+}
+
+void RecordInput(double &money){
+	ifstream fin;
+	fin.open("record.txt");
+
+	if (fin.fail()){
+    cout << "Error" << endl;
+    exit(1);
+  }
+
+	string tempS;
+	getline(fin, tempS);
+	money = stod(tempS);
+	fin.close();
+}
+
 void distribute_card(int cardset[], handcard player[], handcard computer[], handcard publicdeck[]){
 	int j=0;
 	player[0].cardno=cardset[0];
@@ -846,16 +874,24 @@ int main(){
 	// money is the current money of player
 	// buyin is initial money of the player
 	// ante is a fixed bet to add into pool in each round before game start
-	int nextround;
+	int nextround, mode;
 	printrules();
-	cout<<"Please enter the buy in amount(>100) :\n";
-	cin>>buyin;
-	while (buyin<100.0){
-		cout<<"Too less buy in amount, please enter again\n";
-		cin>>buyin;
+	cout << "Enter 1: Load previous record\n2: Start a new game!\n";
+	cin >> mode;
+	if (mode == 1){
+		RecordInput(money);
+		ante=money*0.01;
 	}
-	money=buyin;
-	ante=buyin*0.01;
+	if (mode == 2){
+		cout<<"Please enter the buy in amount(>100) :\n";
+		cin>>buyin;
+		while (buyin<100.0){
+			cout<<"Too less buy in amount, please enter again\n";
+			cin>>buyin;
+		}
+		money=buyin;
+		ante=buyin*0.01;
+	}
 	cout<<"***NEW ROUND***\n";
 	newroundofgame(money, buyin, ante);
 	cout<<"***END OF THIS ROUND***\n"<<"Are you going to play the next round?\n";
@@ -867,6 +903,9 @@ int main(){
 		cout<<"Enter 1: continue for next round\n2: quit game and get the record saved\n";
 		cin>>nextround;
 	}
+	RecordOutput(money);
+	cout << "Game saving...\nPlease be patient" << endl;
+	sleep(3);
 	cout<<"Thank you for playing the game, hope you enjoy this simple c++ poker!\n";
 	return 0;
 }
