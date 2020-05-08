@@ -440,6 +440,11 @@ void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu, bool 
 			break;
 		}
 	}
+	
+	delete[] checkP;
+	delete[] checkC;
+	delete[] checkCO;
+	delete[] checkPO;
 
 	//winner
 	if (straightFlushP && not straightFlushC){
