@@ -89,7 +89,7 @@ bool compare(int a, int b) {        //reverse sort
   return a > b;
 }
 
-void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu)
+void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu, bool &ComWin, bool &PlaWin)
 {
 	int *checkP = new int[2 + sizePu], *checkC = new int[2 + sizePu], *checkCO = new int[2 + sizePu], *checkPO = new int[2 + sizePu];
 
@@ -409,8 +409,6 @@ void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu)
 	}
 
 	//winner
-	bool ComWin = false;
-	bool PlaWin = false;
 	if (straightFlushP && not straightFlushC){
 		PlaWin = true;
 	}
@@ -667,6 +665,8 @@ int newroundofgame(double &money, double buyin, double ante){
 	int cardset[52], p_choice, c_choice, sizePu = 0;
 	double pool=0;
 	handcard player[2], computer[2], publicdeck[5];
+	bool ComWin = false;
+	bool PlaWin = false;
 	// array for handcard to store the cards for this round
 	for (int i=0; i<52; ++i){
 		// initialize the full 52 non-repeating cards
