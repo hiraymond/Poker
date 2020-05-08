@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-#define SPADE "\x
 #include <bits/stdc++.h>
 #define SPADE "\xE2\x99\xA0"
 #define CLUB "\xE2\x99\xA3"
