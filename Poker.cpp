@@ -698,13 +698,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	// p_choice>0: amount of bet
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); ***************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); ***************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -712,7 +712,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			endgame(playerhand, comphand, publicdeck, sizePu); ****************
+			endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); ****************
 			return 0;
 		}
 		else{
@@ -736,13 +736,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); **************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); **************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); ***************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); ***************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -750,7 +750,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			endgame(playerhand, comphand, publicdeck, sizePu); *********************
+			endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); *********************
 			return 0;
 		}
 		else{
@@ -770,13 +770,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); *************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); *************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); **************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); **************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -784,7 +784,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			endgame(playerhand, comphand, publicdeck, sizePu); **************
+			endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); **************
 			return 0;
 		}
 		else{
@@ -805,13 +805,13 @@ int newroundofgame(double &money, double buyin, double ante){
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); *******************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); *******************
 		return 0;
 	}
 	c_choice=c_addbetturn(pool, money, p_choice, buyin);
 	if (c_choice==-1){
 		// computer have withdrawed from this round
-		endgame(playerhand, comphand, publicdeck, sizePu); **************
+		endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); **************
 		return 0;
 	}
 	else if (c_choice==1){	// computer raised the bet
@@ -819,7 +819,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		if (p_choice==0){
 			// player don't follow computer's bet and withdraw
 			cout<<"**You have withdrawed from this round**\n\n";
-			endgame(playerhand, comphand, publicdeck, sizePu); ******************
+			endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin); ******************
 			return 0;
 		}
 		else{
@@ -836,7 +836,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	computer[1].cardimage=inttostr(computer[1].cardno);
 	cout<<computer[0].cardimage<<' '<<computer[1].cardimage<<endl;
 	// Result of the round
-	endgame(playerhand, comphand, publicdeck, sizePu);
+	endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin);
 	return 0;
 }
 
