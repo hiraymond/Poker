@@ -4,8 +4,8 @@ RecordOutput.o: RecordOutput.cpp RecordOutput.h
 RecordInput.o: RecordInput.cpp RecordInput.h
 	g++ -c RecordInput.cpp
 
-Poker.o: Poker.cpp RecordOutput.h RecordInput.h
-	g++ -c Poker.cpp
+NewPoker.o: NewPoker.cpp RecordOutput.h RecordInput.h
+	g++ -c NewPoker.cpp
 
-Poker: Poker.o RecordOutput.o RecordInput.o
-	g++ Poker.o RecordOutput.o RecordInput.o -o Poker
+NewPoker: Poker.o RecordOutput.o RecordInput.o
+	g++ NewPoker.o RecordOutput.o RecordInput.o -o NewPoker
