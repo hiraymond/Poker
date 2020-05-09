@@ -8,11 +8,13 @@ The game start with the player but-in amount(the total money he/she would have t
 Then, for each round, both player and computer would recevie two ramdom generated cards,
 And player can add bet or withdraw from that round according to general poker rules.
 Our program would determine who is winner after the final bet has been added in each round.
-Player can choose to end game when he/she withdraw or finish each round.
+Player can choose to end game when either he/she or the computer withdraw and after finish each round.
 
 Code Requirement:
 
 1. Generation of random game sets or events
+   Hand cards of player, computer and the publicdeck is ramdom for each round
+   The computer would a fixed probability to add bet/check/withdraw in each add bet turn
 2. Data structures for storing game status (using struct to store cards)
 3. Dynamic memory management (dynamic array)
 4. File input/output (loading/saving game status)
