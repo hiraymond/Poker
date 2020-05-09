@@ -905,6 +905,7 @@ int main(){
 	cout<<"Enter 1: continue for next round\n2: quit game and get the record saved\n";
 	cin>>nextround;
 	while (nextround==1){
+		cout<<"***NEW ROUND***\n";
 		newroundofgame(money, buyin, ante);
 		cout<<"***END OF THIS ROUND***\n"<<"Are you going to play the next round?\n";
 		cout<<"Enter 1: continue for next round\n2: quit game and get the record saved\n";
