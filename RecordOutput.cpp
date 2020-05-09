@@ -9,6 +9,7 @@
 #include <string>
 #include <bits/stdc++.h>
 #include "RecordOutput.h"
+#include "RecordInput.h"
 #define SPADE "\xE2\x99\xA0"
 #define CLUB "\xE2\x99\xA3"
 #define HEART "\xE2\x99\xA5"
