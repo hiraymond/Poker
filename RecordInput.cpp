@@ -16,7 +16,7 @@
 #define DIAMOND "\xE2\x99\xA6"
 using namespace std;
 
-void RecordInput(double &money, double &pool){
+void RecordInput(double &money){
 	ifstream fin;
 	fin.open("record.txt");
 
@@ -28,7 +28,5 @@ void RecordInput(double &money, double &pool){
 	string tempS;
 	getline(fin, tempS);
 	money = stod(tempS);
-	getline(fin, tempS);
-	pool = stod(tempS);
 	fin.close();
 }
