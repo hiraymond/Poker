@@ -605,7 +605,7 @@ int p_addbetturn(double &pool, double &money){
 	else if (choice==2){
 		cout<<"Please enter the amount of bet that you want to add: \n";
 		cin>>bet;
-		while (bet<=0){
+		while (bet<=0 || bet>money){
 			cout<<"Invalid bet, please enter again\n";
 			cin>>bet;
 		}
@@ -623,7 +623,7 @@ int c_addbetturn(double &pool, double &money, double bet, double buyin){
 		// The player just checked
 		// 1/4 chance the computer would add bet
 		int addornot=rand()%4;
-		if (addornot==0){	//computer add bet with 1/4 of chance
+		if (addornot==0 && money>30.0){	//computer add bet with 1/4 of chance
 			pool+=money*0.04;
 			cout<<"The computer player has added "<<money*0.04<<" to the pool\n";
 			cout<<"The pool now contains $"<<pool<<endl;
@@ -758,7 +758,7 @@ int newroundofgame(double &money, double buyin, double ante){
 		publicdeckSTR[i].cardimage=inttostr(publicdeck[i].cardno);
 	}
 	cout<<"The first three cards of the publicdeck is as follow: \n";
-	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<endl;
+	cout<<publicdeckSTR[0].cardimage<<' '<<publicdeckSTR[1].cardimage<<' '<<publicdeckSTR[2].cardimage<<endl;
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
@@ -795,7 +795,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	sizePu = 4;
 	srand(time(NULL));
 	cout<<"The first four cards of the publicdeck is as follow: \n";
-	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<' '<<publicdeck[3].cardimage<<endl;
+	cout<<publicdeckSTR[0].cardimage<<' '<<publicdeckSTR[1].cardimage<<' '<<publicdeckSTR[2].cardimage<<' '<<publicdeckSTR[3].cardimage<<endl;
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
@@ -832,8 +832,8 @@ int newroundofgame(double &money, double buyin, double ante){
 	sizePu = 5;
 	srand(time(NULL));
 	cout<<"The all five cards of the publicdeck is as follow: \n";
-	cout<<publicdeck[0].cardimage<<' '<<publicdeck[1].cardimage<<' '<<publicdeck[2].cardimage<<' '
-	<<publicdeck[3].cardimage<<' '<<publicdeck[4].cardimage<<endl;
+	cout<<publicdeckSTR[0].cardimage<<' '<<publicdeckSTR[1].cardimage<<' '<<publicdeckSTR[2].cardimage<<' '
+	<<publicdeckSTR[3].cardimage<<' '<<publicdeckSTR[4].cardimage<<endl;
 	p_choice=p_addbetturn(pool, money);
 	if (p_choice==-1){
 		// player have withdrawed from this round
@@ -869,14 +869,14 @@ int newroundofgame(double &money, double buyin, double ante){
 	cout<<"The computer hand cards are:\n";
 	computerSTR[0].cardimage=inttostr(computer[0].cardno);
 	computerSTR[1].cardimage=inttostr(computer[1].cardno);
-	cout<<computer[0].cardimage<<' '<<computer[1].cardimage<<endl;
+	cout<<computerSTR[0].cardimage<<' '<<computerSTR[1].cardimage<<endl;
 	// Result of the round
 	endgame(player, computer, publicdeck, sizePu, ComWin, PlaWin);
 	return 0;
 }
 
 int main(){
-	srand(1);
+	srand(time(NULL));
 	double buyin, money, ante;
 	// money is the current money of player
 	// buyin is initial money of the player
