@@ -584,7 +584,7 @@ int p_addbetturn(double &pool, double &money){
 		cin>>choice;
 	}
 	if (choice==0){
-		cout<<"**You have withdrawed from this round**\n";
+		cout<<"**You have withdrawed from this round**\n\n";
 		return -1;
 	}
 	else if (choice==1){
