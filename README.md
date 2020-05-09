@@ -13,18 +13,17 @@ Player can choose to end game when he/she withdraw or finish each round.
 Code Requirement:
 
 1. Generation of random game sets or events
-2. Data structures for storing game status
-3. Dynamic memory management
-4. File input/output (e.g., for loading/saving game status)
-5. Program codes in multiple files
+2. Data structures for storing game status (using struct to store cards)
+3. Dynamic memory management (dynamic array)
+4. File input/output (loading/saving game status)
+5. Program codes in multiple files (using Makefile and .h file)
 
-Your implementation should encompass the following coding elements:
+Non-standard C/C++ libraries:
+  Windows.h/unistd.h
+  Function: Easter egg, creating fake loading time using sleep function.
 
-1. There would be total of nine different ramdom cards generated in each round. 
-   (two for player hand cards, two for computer player hand cards, and five for the public deck)
-2. We would be using arrays to store cards for player, computer player, and public deck.
-3. We would also use dynamic arrays to store the win/lose record for the player, 
-   the size of the record array is set as two (capable for storing two rounds of game)
-   in the beginning, and the size of the record array would double when the limits is met.
-4. use .txt file to save current hand of player, computer player, deck and the win/lose record.
-5. We will have a file for the computer player, a file for loading/saving game status, a file for user input and a file for the main        body.
+Instructions:
+
+1. Player should first generate a Poker file using "make Poker" command.
+2. Player should see a game instruction after running the Poker file.
+3. Follow the instruction to play the game.
