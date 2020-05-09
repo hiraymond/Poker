@@ -7,5 +7,5 @@ RecordInput.o: RecordInput.cpp RecordInput.h
 NewPoker.o: NewPoker.cpp RecordOutput.h RecordInput.h
 	g++ -c NewPoker.cpp
 
-NewPoker: Poker.o RecordOutput.o RecordInput.o
+NewPoker: NewPoker.o RecordOutput.o RecordInput.o
 	g++ NewPoker.o RecordOutput.o RecordInput.o -o NewPoker
