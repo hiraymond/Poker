@@ -96,9 +96,20 @@ bool compare(int a, int b) {        //reverse sort
   return a > b;
 }
 
-void endgame(int playerhand[],int comphand[],int publicdeck[], int sizePu, bool &ComWin, bool &PlaWin)
+void endgame(handcard player[],handcard computer[],handcard publicdeckStructure[], int sizePu, bool &ComWin, bool &PlaWin)
 {
 	int *checkP = new int[2 + sizePu], *checkC = new int[2 + sizePu], *checkCO = new int[2 + sizePu], *checkPO = new int[2 + sizePu];
+	int playerhand[2], comphand[2], *publicdeck = new int[sizePu];
+	for (int i = 0; i < 2; i++){
+		playerhand[i] = player[i].cardno;
+	}
+	for (int i = 0; i < 2; i++){
+		comphand[i] = computer[i].cardno;
+	}
+	for (int i = 0; i < sizePu; i++){
+		publicdeck[i] = publicdeckStructure[i].cardno;
+	}
+	
 
 
 	for (int i = 0; i < 2 + sizePu; i++){            //combine hand and publicdeck
@@ -860,7 +871,7 @@ int newroundofgame(double &money, double buyin, double ante){
 	computerSTR[1].cardimage=inttostr(computer[1].cardno);
 	cout<<computer[0].cardimage<<' '<<computer[1].cardimage<<endl;
 	// Result of the round
-	endgame(playerhand, comphand, publicdeck, sizePu, ComWin, PlaWin);
+	endgame(player, computer, publicdeck, sizePu, ComWin, PlaWin);
 	return 0;
 }
 
