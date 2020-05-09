@@ -16,7 +16,7 @@
 #define DIAMOND "\xE2\x99\xA6"
 using namespace std;
 
-void RecordOutput(double money, double pool){
+void RecordOutput(double money){
 	ofstream fout;
 	fout.open("record.txt");
 
@@ -26,6 +26,5 @@ void RecordOutput(double money, double pool){
   }
 
 	fout << money << endl;
-	fout << pool << endl;
 	fout.close();
 }
