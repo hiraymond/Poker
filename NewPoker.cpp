@@ -27,7 +27,7 @@ void printrules(){
     "Then, you and the computer player would receive two ramdom cards(hand cards)\n"<<
     "It would be a add bet turn after you have viewed your\n"<<
     "In each add bet turn, you can choose to withdrawl from this round,\n"<<
-    "Or add bet into the pool with a amount no more than 10% of your buy in amount\n"<<
+    "Or add bet into the pool with a amount not less than your current money\n"<<
     "Once a bet has added,\nanother must add at least the same amount of bet in order to proceed the game\n"<<
     "Or simply \'check\', when you do not want to add bet\n"<<
     "It would be computer add bet turn when you have chosen one of the three choice above\n"<<
